@@ -45,12 +45,11 @@ const Index = ({ committees, parties }) => (
 
 Index.getInitialProps = async () => {
   const { data: committeesData } = await axios(POLITICIANS_API + '/committees')
-  const committees = committeesData.map(({ name, _id: id }) => ({ name, id }))
-  console.log(committees)
+  const committees = committeesData.map(({ name, _id: id }) => ({ name, id })).sort((a, b) =>  a.name < b.name ? -1 : 1)
 
   const { data: partiesData } = await axios(POLITICIANS_API + '/parties')
-  console.log(partiesData)
-  const parties = partiesData.map(({ name, _id: id }) => ({ name, id })).sort()
+  const parties = partiesData.map(({ name, _id: id }) => ({ name, id })).sort((a, b) =>  a.name < b.name ? -1 : 1)
+
   return { committees, parties }
 }
 
