@@ -19,7 +19,7 @@ const Committees = ({ parties, members }) => (
     {members &&
       <Box>
         <h1>Utvalgsmedlemmer</h1>
-        <Table columns={['Navn', 'Rolle', 'Parti', 'E-post', 'Mobil', 'Telefon']}>
+        <Table columns={['Navn', 'Rolle', 'E-post', 'Mobil', 'Telefon']}>
           {members.map(item =>
             <tr key={item.recno}>
               <td>
@@ -28,7 +28,6 @@ const Committees = ({ parties, members }) => (
                 </Link>
               </td>
               <td>{item.roleDescription}</td>
-              <td>{item.party}</td>
               <td>{item.publicMail}</td>
               <td>{item.mobilePhone}</td>
               <td>{item.phone}</td>
