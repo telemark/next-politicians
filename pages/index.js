@@ -1,41 +1,18 @@
-import axios from 'axios'
+import { Link } from '../routes'
 import Page from '../components/Page'
-import { POLITICIANS_API } from '../config'
-import { Box } from '../components/styles'
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0
-
-const Table = ({ title, children }) => (
-  <table>
-    <thead>
-      <tr>
-        <th>
-          { title }
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      { children }
-    </tbody>
-    <style jsx global>
-      {`
-        table {
-          text-align: left;
-        }
-      `}
-    </style>
-  </table>
-)
+import { Box, Table } from '../components/styles'
+import { getParties, getCommittees } from '../lib/get-data'
 
 const Index = ({ committees, parties }) => (
   <Page>
     <div>
       <Box>
         <h1>Politiske utvalg</h1>
-        <Table title='Utvalg'>
+        <Table columns={['Utvalg']}>
           {
-            committees.map(({ name, id }) => (
+            committees.map(({ name, _id: id }) => (
               <tr key={id}>
-                <td><a href={`/committees/${id}`}>{name}</a></td>
+                <td><Link route='committees' params={{ id }}><a>{name}</a></Link></td>
               </tr>
             ))
           }
@@ -43,11 +20,11 @@ const Index = ({ committees, parties }) => (
       </Box>
       <Box>
         <h1>Politiske partier</h1>
-        <Table title='Parti'>
+        <Table columns='Parti'>
           {
-            parties.map(({ name, id }) => (
+            parties.map(({ name, _id: id }) => (
               <tr key={id}>
-                <td><a href={`/parties/${id}`}>{name}</a></td>
+                <td><Link route='parties' params={{ id: id }}><a>{name}</a></Link></td>
               </tr>
             ))
           }
@@ -58,12 +35,8 @@ const Index = ({ committees, parties }) => (
 )
 
 Index.getInitialProps = async () => {
-  const { data: committeesData } = await axios(POLITICIANS_API + '/committees')
-  const committees = committeesData.map(({ name, _id: id }) => ({ name, id })).sort((a, b) => a.name < b.name ? -1 : 1)
-
-  const { data: partiesData } = await axios(POLITICIANS_API + '/parties')
-  const parties = partiesData.map(({ name, _id: id }) => ({ name, id })).sort((a, b) => a.name < b.name ? -1 : 1)
-
+  const committees = await getCommittees()
+  const parties = await getParties()
   return { committees, parties }
 }
 
