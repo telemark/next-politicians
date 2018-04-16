@@ -60,7 +60,7 @@
     "next": "5.0.0",
     "next-routes": "1.4.0",
     "react": "16.2.0",
-    "react-dom": "16.2.0"
+    "react-dom": "16.3.2"
   },
   "now": {
     "name": "politkere",
