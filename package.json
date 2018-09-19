@@ -59,8 +59,8 @@
     "dotenv": "6.0.0",
     "next": "6.1.2",
     "next-routes": "1.4.1",
-    "react": "16.5.1",
-    "react-dom": "16.5.1"
+    "react": "16.5.2",
+    "react-dom": "16.5.2"
   },
   "now": {
     "name": "politkere",
